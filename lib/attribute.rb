@@ -4,13 +4,14 @@ class Attribute
   attr_reader :name, :value
 
   def initialize(name, value)
-    raise 'name and value must not be empty' if name.empty? or value.empty?
     @name  = name
     @value = value
   end
 
   def self.from_xml(xml)
-    new(att_desc(xml), att_value(xml))
+    if !att_desc(xml).empty? && !att_value(xml).empty?
+      new(att_desc(xml), att_value(xml))
+    end
   end
 
   private
