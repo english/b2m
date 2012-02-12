@@ -13,6 +13,8 @@ module B2m
 
       if name == 'Stone'
         Stone.new(value).send(:store)
+      elsif name == 'Material'
+        Material.new(value).send(:store)
       else
         new(name, value).send(:store)
       end

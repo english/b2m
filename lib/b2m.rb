@@ -5,5 +5,6 @@ module B2m
 
   require 'b2m/attribute'
   require 'b2m/stone'
+  require 'b2m/material'
   require 'b2m/product'
 end
