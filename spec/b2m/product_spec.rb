@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module B2m
   describe Product do
-    before(:each) { Attribute.clear_instances! }
+    before { Attribute.clear_instances! }
 
     it "has attributes" do
       product = Product.new
@@ -115,6 +115,8 @@ module B2m
         product = Product.from_xml xml
         product.attribute_value('Gender').must_equal 'Ladies'
         product.attribute_value('Material').must_equal 'Yellow Gold'
+        product.attribute_value('Stock Number').must_equal '0101044'
+        product.attribute_value('Modifier').must_equal 'Add'
       end
     end
   end

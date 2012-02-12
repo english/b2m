@@ -1,28 +1,33 @@
 module B2m
   class Attribute
-    attr_reader :name, :value
+    attr_reader :name
     @@instances = {}
 
-    def initialize(name, value)
+    def initialize(name, value, type)
       @name  = name
       @value = value
+      @type  = type
     end
 
     def self.create(name, value)
-      return nil if name.empty? or value.empty?
+      return NullAttribute.new if name.to_s.empty? or value.to_s.empty?
 
-      if name == 'Stone'
-        Stone.new(value).send(:store)
-      elsif name == 'Material'
-        Material.new(value).send(:store)
-      else
-        new(name, value).send(:store)
-      end
+      type = case name
+             when 'Stone'    then Multiple.new 'Stone',    value
+             when 'Material' then Multiple.new 'Material', value
+             when 'Modifier' then Modifier.new value
+             else Normal.new value
+             end
+
+      attribute = new(name, value, type)
+      attribute.send(:store)
     end
 
     def self.from_xml(xml)
       if !att_desc(xml).empty? && !att_value(xml).empty?
-        new(att_desc(xml), att_value(xml))
+        self.create(att_desc(xml), att_value(xml))
+      else
+        NullAttribute.new
       end
     end
 
@@ -33,6 +38,10 @@ module B2m
 
     def self.clear_instances!
       @@instances.clear
+    end
+
+    def value
+      @type.value
     end
 
     private
@@ -52,5 +61,11 @@ module B2m
     def self.att_value(xml)
       xml.css('ATT-VALUE').first.content
     end
+  end
+
+  class NullAttribute
+    def initialize(*args); end
+    def name; end
+    def value; end
   end
 end

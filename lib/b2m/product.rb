@@ -1,7 +1,7 @@
 module B2m
   class Product
     def initialize
-      @attributes = []
+      @attributes = Hash.new(NullAttribute.new)
     end
 
     def self.from_xml(xml)
@@ -12,32 +12,37 @@ module B2m
     end
 
     def add_attribute(name, value)
-      unless has_attribute? name
-        @attributes << Attribute.create(name, value)
-      end
+      attr = Attribute.create name, value
+
+      @attributes[attr.name] = attr unless attribute? attr.name
     end
 
     def attribute_value(name)
-      @attributes.find {|attr| attr.name == name }.value
+      @attributes[name].value
     end
 
     def attributes_count
-      @attributes.size
+      @attributes.keys.compact.count
     end
 
-    def has_attribute?(name)
-      @attributes.any? {|attr| attr.name == name }
+    def attribute?(name)
+      @attributes.include? name
     end
 
     def add_attributes_from_xml(xml)
-      @attributes += xml.css('ATTRIBUTE').map {|att| Attribute.from_xml(att) }.compact
+      add_attribute 'Stock Number', node_content(xml, 'STKNO')
+      add_attribute 'Modifier',     node_content(xml, 'ATTR')
+
+      xml.css('ATTRIBUTE').each do |att|
+        attribute = Attribute.from_xml(att)
+        add_attribute(attribute.name, attribute.value)
+      end
     end
 
     private
 
-    def multiple(attribute_name)
-      [ @attributes.find {|attr| attr.name == attribute_name }.value,
-        attribute_value("2nd #{attribute_name}") ].compact.join(',')
+    def node_content(xml, element)
+      xml.at_css(element).content if xml.at_css(element)
     end
   end
 end

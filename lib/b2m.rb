@@ -4,7 +4,8 @@ module B2m
   require 'nokogiri'
 
   require 'b2m/attribute'
-  require 'b2m/stone'
-  require 'b2m/material'
+  require 'b2m/multiple'
+  require 'b2m/modifier'
+  require 'b2m/normal'
   require 'b2m/product'
 end
