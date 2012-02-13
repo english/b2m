@@ -1,43 +1,29 @@
 module B2m
   class Attribute
-    attr_reader :name
-    @@instances = {}
+    attr_reader :name, :product
 
-    def initialize(name, value, type)
-      @name  = name
-      @value = value
-      @type  = type
+    def initialize(name, value, type, product)
+      @name    = name
+      @value   = value
+      @type    = type
+      @product = product
     end
 
-    def self.create(name, value)
+    def self.create(name, value, product)
       return NullAttribute.new if name.to_s.empty? or value.to_s.empty?
 
       type = case name
-             when 'Stone'    then Multiple.new 'Stone',    value
-             when 'Material' then Multiple.new 'Material', value
+             when 'Stone'    then Multiple.new 'Stone',    value, product
+             when 'Material' then Multiple.new 'Material', value, product
              when 'Modifier' then Modifier.new value
              else Normal.new value
              end
 
-      attribute = new(name, value, type)
-      attribute.send(:store)
+      attribute = new(name, value, type, product)
     end
 
-    def self.from_xml(xml)
-      if !att_desc(xml).empty? && !att_value(xml).empty?
-        self.create(att_desc(xml), att_value(xml))
-      else
-        NullAttribute.new
-      end
-    end
-
-    def self.value(name)
-      @@instances[name].value unless @@instances[name].value.empty?
-    rescue NoMethodError
-    end
-
-    def self.clear_instances!
-      @@instances.clear
+    def self.from_xml(xml, product)
+      self.create att_desc(xml), att_value(xml), product
     end
 
     def value
@@ -45,14 +31,6 @@ module B2m
     end
 
     private
-
-    def store
-      @@instances[name] = self; self
-    end
-
-    def self.instances
-      @@instances
-    end
 
     def self.att_desc(xml)
       xml.css('ATT-DESC').first.content
@@ -67,5 +45,6 @@ module B2m
     def initialize(*args); end
     def name; end
     def value; end
+    def product; end
   end
 end

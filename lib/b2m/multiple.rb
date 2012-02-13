@@ -1,12 +1,13 @@
 module B2m
 	class Multiple
-		def initialize(attribute_name, attribute_value)
-			@attribute = attribute_name
-			@value     = attribute_value
+		def initialize(name, value, product)
+			@name    = name
+			@value   = value
+      @product = product
 		end
 
 		def value
-			[ @value, Attribute.value("2nd #{@attribute}") ].compact.join(',')
+      [ @value, @product.attribute_value("2nd #{@name}") ].compact.join ','
 		end
 	end
 end

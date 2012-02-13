@@ -2,13 +2,20 @@ require 'spec_helper'
 
 module B2m
   describe Multiple do
-		before { Attribute.clear_instances! }
+    describe "with 2nd attribute set" do
+      it "concatenates its value and 2nd attr value" do
+        product = Product.new
+        product.add_attribute '2nd Stone', 'Ruby'
 
-    it "concatenates Stone and 2nd Stone" do
-			stone        = Attribute.create('Stone', 'Diamond')
-			second_stone = Attribute.create('2nd Stone', 'Ruby')
+        Multiple.new('Stone', 'Diamond', product).value.must_equal 'Diamond,Ruby'
+      end
+    end
 
-			Multiple.new('Stone', 'Diamond').value.must_equal 'Diamond,Ruby'
+    describe "with 2nd attribute not set" do
+      it "returns just its own value" do
+        product = Product.new
+        Multiple.new('Stone', 'Diamond', product).value.must_equal 'Diamond'
+      end
     end
   end
 end

@@ -12,7 +12,7 @@ module B2m
     end
 
     def add_attribute(name, value)
-      attr = Attribute.create name, value
+      attr = Attribute.create name, value, self
 
       @attributes[attr.name] = attr unless attribute? attr.name
     end
@@ -34,7 +34,7 @@ module B2m
       add_attribute 'Modifier',     node_content(xml, 'ATTR')
 
       xml.css('ATTRIBUTE').each do |att|
-        attribute = Attribute.from_xml(att)
+        attribute = Attribute.from_xml att, self
         add_attribute(attribute.name, attribute.value)
       end
     end

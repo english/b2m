@@ -2,13 +2,16 @@ require 'spec_helper'
 
 module B2m
   describe Product do
-    before { Attribute.clear_instances! }
-
     it "has attributes" do
       product = Product.new
-      product.add_attribute 'Brand', 'Pandora'
+      product.add_attribute 'Brand',     'Pandora'
+      product.add_attribute 'Stone',     'Diamond'
+      product.add_attribute '2nd Stone', 'Ruby'
+      product.add_attribute 'Material',  'Gold'
 
-      product.attribute_value('Brand').must_equal 'Pandora'
+      product.attribute_value('Brand').must_equal    'Pandora'
+      product.attribute_value('Stone').must_equal    'Diamond,Ruby'
+      product.attribute_value('Material').must_equal 'Gold'
     end
 
     it "only has one attribute per attribute name" do
