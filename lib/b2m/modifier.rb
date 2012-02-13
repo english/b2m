@@ -1,6 +1,6 @@
 module B2m
   class Modifier
-    def initialize(value)
+    def initialize(name, value, product)
       @value = value
     end
 

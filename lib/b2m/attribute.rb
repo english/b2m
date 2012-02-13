@@ -5,21 +5,21 @@ module B2m
     def initialize(name, value, type, product)
       @name    = name
       @value   = value
-      @type    = type
       @product = product
+      @type    = type.new name, value, product
     end
 
     def self.create(name, value, product)
       return NullAttribute.new if name.to_s.empty? or value.to_s.empty?
 
       type = case name
-             when 'Stone'    then Multiple.new 'Stone',    value, product
-             when 'Material' then Multiple.new 'Material', value, product
-             when 'Modifier' then Modifier.new value
-             else Normal.new value
+             when 'Stone'    then Multiple
+             when 'Material' then Multiple
+             when 'Modifier' then Modifier
+             else Normal
              end
 
-      attribute = new(name, value, type, product)
+      new(name, value, type, product)
     end
 
     def self.from_xml(xml, product)
@@ -33,11 +33,11 @@ module B2m
     private
 
     def self.att_desc(xml)
-      xml.css('ATT-DESC').first.content
+      xml.at_css('ATT-DESC').content
     end
 
     def self.att_value(xml)
-      xml.css('ATT-VALUE').first.content
+      xml.at_css('ATT-VALUE').content
     end
   end
 
