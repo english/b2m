@@ -1,6 +1,7 @@
 source :rubygems
 
 group :development do
+  gem 'rake'
   gem 'minitest'
   gem 'guard-minitest', :git => 'git://github.com/aspiers/guard-minitest.git'
   gem 'purdytest'
