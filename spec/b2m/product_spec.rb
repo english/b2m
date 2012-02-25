@@ -15,9 +15,11 @@ module B2m
     end
 
     it "has a config object" do
-      product = Product.new({:test => 'Pass'})
+      Config.setup({'translate' => {:test => 'Pass'}})
+
+      product = Product.new
       config = product.instance_variable_get(:@config)
-      config[:test].must_equal 'Pass'
+      config.translate(:test).must_equal 'Pass'
     end
 
     it "only has one attribute per attribute name" do

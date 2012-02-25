@@ -1,12 +1,12 @@
 module B2m
   class Product
-    def initialize(config = {})
+    def initialize
       @attributes = Hash.new(NullAttribute.new)
-      @config = config
+      @config = Config.instance
     end
 
-    def self.from_xml(xml, config = {})
-      product = Product.new(config)
+    def self.from_xml(xml)
+      product = Product.new
       product.add_attributes_from_xml Nokogiri::XML(xml)
 
       product
@@ -30,6 +30,11 @@ module B2m
     end
 
     def add_attributes_from_xml(xml)
+      @config.required_headers.each do |header|
+        translated = @config.translate(header)
+        add_attribute header, node_content(xml, translated)
+      end
+
       add_attribute 'Stock Number', node_content(xml, 'STKNO')
       add_attribute 'Modifier',     node_content(xml, 'ATTR')
       add_attribute 'Supplier Reference', node_content(xml, 'SUPPLREF')

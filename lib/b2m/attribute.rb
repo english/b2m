@@ -30,6 +30,10 @@ module B2m
       @type.value
     end
 
+    def to_s
+      "#{@name}: #{@value}"
+    end
+
     private
 
     def self.att_desc(xml)
