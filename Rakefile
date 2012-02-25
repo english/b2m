@@ -1,5 +1,3 @@
-require 'bundler'
-require 'rake/clean'
 require 'rake/testtask'
 
 include Rake::DSL
