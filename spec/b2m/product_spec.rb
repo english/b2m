@@ -14,6 +14,12 @@ module B2m
       product.attribute_value('Material').must_equal 'Gold'
     end
 
+    it "has a config object" do
+      product = Product.new({:test => 'Pass'})
+      config = product.instance_variable_get(:@config)
+      config[:test].must_equal 'Pass'
+    end
+
     it "only has one attribute per attribute name" do
       product = Product.new
       product.add_attribute 'Brand', 'Pandora'
@@ -120,6 +126,8 @@ module B2m
         product.attribute_value('Material').must_equal 'Yellow Gold'
         product.attribute_value('Stock Number').must_equal '0101044'
         product.attribute_value('Modifier').must_equal 'Add'
+        product.attribute_value('Supplier Reference').must_equal 'ML99/25'
+        product.attribute_value('Quantity').must_equal '1'
       end
     end
   end

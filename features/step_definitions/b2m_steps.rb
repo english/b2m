@@ -1,5 +1,3 @@
-require 'product'
-
 Given /^a sample catalog with just a ring item$/ do
   @xml = <<-XML
     <CATALOG>
@@ -52,7 +50,7 @@ Given /^a sample catalog with just a ring item$/ do
 end
 
 When /^I load the product$/ do
-  @ring = Product.from_xml @xml
+  @ring = B2m::Product.from_xml(@xml)
 end
 
 Then /^I should be able to inspect the products values$/ do
