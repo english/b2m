@@ -6,5 +6,6 @@ Feature: Load import stock from bsmart to Magento
 
   Scenario: Load a product from sample ring xml
     Given a sample catalog with just a ring item
+    And a full config
     When I load the product
     Then I should be able to inspect the products values

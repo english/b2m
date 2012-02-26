@@ -31,14 +31,9 @@ module B2m
 
     def add_attributes_from_xml(xml)
       @config.required_headers.each do |header|
-        translated = @config.translate(header)
-        add_attribute header, node_content(xml, translated)
+        brs_name = @config.translate(header)
+        add_attribute header, node_content(xml, brs_name)
       end
-
-      add_attribute 'Stock Number', node_content(xml, 'STKNO')
-      add_attribute 'Modifier',     node_content(xml, 'ATTR')
-      add_attribute 'Supplier Reference', node_content(xml, 'SUPPLREF')
-      add_attribute 'Quantity', node_content(xml, 'QTY')
 
       xml.css('ATTRIBUTE').each do |att|
         attribute = Attribute.from_xml att, self

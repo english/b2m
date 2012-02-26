@@ -5,16 +5,24 @@ module B2m
     include Singleton
 
     def initialize
-      @data = NullHash.new
+      clear!
     end
 
-    def setup(data)
-      @data = Hash.new(NullValue.new)
+    def clear!
+      @data = Hash.new([])
+    end
+
+    def self.clear!
+      self.instance.clear!
+    end
+
+    def load(data)
+      clear!
       @data.merge! data
     end
 
-    def self.setup(data)
-      self.instance.setup(data)
+    def self.load(data)
+      self.instance.load(data)
     end
 
     def required_headers
@@ -24,15 +32,5 @@ module B2m
     def translate(key)
       @data['translate'][key]
     end
-  end
-
-  class NullHash
-    def [](key)
-      NullValue.new
-    end
-  end
-
-  class NullValue
-    def each; end
   end
 end

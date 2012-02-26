@@ -1,3 +1,5 @@
+require 'yaml'
+
 Given /^a sample catalog with just a ring item$/ do
   @xml = <<-XML
     <CATALOG>
@@ -47,6 +49,10 @@ Given /^a sample catalog with just a ring item$/ do
       </ITEM>
     <CATALOG>
   XML
+end
+
+Given /^a full config$/ do
+  B2m::Config.load(YAML.load_file('assets/b2m.yml'))
 end
 
 When /^I load the product$/ do

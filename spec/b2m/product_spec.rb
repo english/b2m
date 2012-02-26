@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module B2m
   describe Product do
+    before { Config.clear! }
+
     it "has attributes" do
       product = Product.new
       product.add_attribute 'Brand',     'Pandora'
@@ -15,7 +17,7 @@ module B2m
     end
 
     it "has a config object" do
-      Config.setup({'translate' => {:test => 'Pass'}})
+      Config.load({'translate' => {:test => 'Pass'}})
 
       product = Product.new
       config = product.instance_variable_get(:@config)
@@ -123,13 +125,19 @@ module B2m
       end
 
       it "loads the ATTRIBUTE nodes to attributes" do
-        product = Product.from_xml xml
+        product = Product.from_xml(xml)
         product.attribute_value('Gender').must_equal 'Ladies'
         product.attribute_value('Material').must_equal 'Yellow Gold'
-        product.attribute_value('Stock Number').must_equal '0101044'
-        product.attribute_value('Modifier').must_equal 'Add'
-        product.attribute_value('Supplier Reference').must_equal 'ML99/25'
-        product.attribute_value('Quantity').must_equal '1'
+      end
+
+      it "loads attributes specified in 'required-headers' in config" do
+        Config.load({
+          'required-headers' => %w{ qty },
+          'translate' => { 'qty' => 'QTY' }
+        })
+
+        product = Product.from_xml(xml)
+        product.attribute_value('qty').must_equal '1'
       end
     end
   end
