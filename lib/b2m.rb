@@ -7,6 +7,7 @@ module B2m
   require 'b2m/attribute'
   require 'b2m/multiple'
   require 'b2m/modifier'
+  require 'b2m/price'
   require 'b2m/normal'
   require 'b2m/product'
 end

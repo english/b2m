@@ -132,12 +132,16 @@ module B2m
 
       it "loads attributes specified in 'required-headers' in config" do
         Config.load({
-          'required-headers' => %w{ qty },
-          'translate' => { 'qty' => 'QTY' }
+          'required-headers' => %w{ qty price },
+          'translate' => {
+            'qty' => 'QTY',
+            'price' => 'PRICE'
+          }
         })
 
         product = Product.from_xml(xml)
         product.attribute_value('qty').must_equal '1'
+        product.attribute_value('price').must_equal '795.00'
       end
     end
   end

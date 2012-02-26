@@ -16,6 +16,7 @@ module B2m
              when 'Stone'    then Multiple
              when 'Material' then Multiple
              when 'Modifier' then Modifier
+             when 'price' then Price
              else Normal
              end
 
