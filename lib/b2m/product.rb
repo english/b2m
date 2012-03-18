@@ -31,14 +31,17 @@ module B2m
 
     def add_attributes_from_xml xml
       add_required_headers xml
+      add_from_attribute_nodes xml
+    end
 
+    private
+
+    def add_from_attribute_nodes xml
       xml.css('ATTRIBUTE').each do |att|
         attribute = Attribute.from_xml att, self
         add_attribute attribute.name, attribute.value
       end
     end
-
-    private
 
     def add_required_headers xml
       @config.required_headers.each do |header|
