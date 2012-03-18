@@ -2,26 +2,27 @@ require 'spec_helper'
 
 module B2m
   describe Attribute do
-    it "has a name, value and a product" do
-      product = Product.new
-      brand = Attribute.create 'Brand', 'Pandora', product
+    describe :create do
+      let(:product) { double 'Product' }
+      subject { Attribute.create 'Brand', 'Pandora', product }
 
-      brand.name.must_equal  'Brand'
-      brand.value.must_equal 'Pandora'
-      brand.product.must_be_same_as product
+      its(:name)    { should == 'Brand'    }
+      its(:value)   { should == 'Pandora'  }
+      its(:product) { should equal product }
     end
 
-    it "can be constructed from xml" do
-      xml = <<-XML
-        <ATTRIBUTE>
-          <ATT-DESC>Brand</ATT-DESC>
-          <ATT-VALUE>TechnoMarine</ATT-VALUE>
-        </ATTRIBUTE>
-      XML
+    describe :from_xml do
+      let(:xml) { <<-XML
+          <ATTRIBUTE>
+            <ATT-DESC>Brand</ATT-DESC>
+            <ATT-VALUE>TechnoMarine</ATT-VALUE>
+          </ATTRIBUTE>
+        XML
+      }
 
-      xml_attr = Attribute.from_xml Nokogiri::XML(xml), Product.new
-      xml_attr.name.must_equal  'Brand'
-      xml_attr.value.must_equal 'TechnoMarine'
+      subject { Attribute.from_xml Nokogiri::XML(xml), double('Product') }
+      its(:name)  { should == 'Brand'        }
+      its(:value) { should == 'TechnoMarine' }
     end
   end
 end

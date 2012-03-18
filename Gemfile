@@ -1,14 +1,11 @@
 source :rubygems
 
-group :development do
-  gem 'rake'
-  gem 'minitest'
-  gem 'guard-minitest', :git => 'git://github.com/aspiers/guard-minitest.git'
-  gem 'purdytest'
-  gem 'cucumber'
-  gem 'ruby_gntp'
-  gem 'i18n'
-  gem 'factory_girl'
-end
+gem "nokogiri", "~> 1.5.2"
 
-gem 'nokogiri'
+group :development do
+  gem "rake",         "~> 0.9.2"
+  gem "cucumber",     "~> 1.1.9"
+  gem "rspec",        "~> 2.9.0"
+  gem "ruby_gntp",    "~> 0.3.4"
+  gem "factory_girl", "~> 2.6.4"
+end

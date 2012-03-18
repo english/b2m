@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module B2m
   describe Config do
-    let(:config) do
+    subject do
       Config.instance.load({
         'required-headers' => %w{ condition _store qty },
         'translate' => { 'apples' => 'oranges' }
@@ -11,28 +11,25 @@ module B2m
       Config.instance
     end
 
-    it "has required headers" do
-      config.required_headers.must_equal %w{ condition _store qty }
-    end
+    its(:required_headers) { should ==  %w{ condition _store qty } }
 
     it "translates bsmart attributes to magento attributes" do
-      config.translate('apples').must_equal 'oranges'
+      subject.translate('apples').should == 'oranges'
     end
 
     it "can reload" do
-      config = Config.instance
-      config.load({'name' => 'A'})
+      subject.load({'name' => 'A'})
 
-      config.instance_variable_get(:@data)['name'].must_equal 'A'
+      subject.instance_variable_get(:@data)['name'].should == 'A'
 
-      config.load({'name' => 'B'})
-      config.instance_variable_get(:@data)['name'].must_equal 'B'
+      subject.load({'name' => 'B'})
+      subject.instance_variable_get(:@data)['name'].should == 'B'
     end
 
     it "can be cleared" do
-      config.required_headers.must_equal %w{ condition _store qty }
-      config.clear!
-      config.required_headers.must_equal []
+      subject.required_headers.should == %w{ condition _store qty }
+      subject.clear!
+      subject.required_headers.should be_empty
     end
   end
 end

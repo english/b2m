@@ -1,0 +1,221 @@
+---
+translate:
+  _category: CATEGORY
+  name: WEBDESC
+  description: NOTEPAD
+  price: PRICE
+  qty: QTY
+  sku: STKNO
+  special_price: Special Price
+  suppl_ref: SUPPLREF
+required-headers:
+- condition
+- _store
+- qty
+- is_in_stock
+- status
+- tax_class_id
+- _type
+- _attribute_set
+- _product_websites
+- visibility
+- sku
+- price
+- special_price
+- _store
+- brand
+- description
+- image
+- small_image
+- thumbnail
+- _media_image
+- _media_attribute_id
+- _media_label
+- _media_position
+- _media_is_disabled
+- suppl_ref
+- name
+- meta_title
+- type
+- '*_category'
+- is_discontinued
+defaults:
+  condition: new
+  _store: admin
+  tax_class_id: 2
+  _type: simple
+  _attribute_set: Default
+  _product_websites: base
+  visibility: 4
+  _media_attribute_id: 73
+  _media_position: 1
+  _media_is_disabled: 1
+  stone: None
+  gender: Ladies
+department-defaults:
+  '05':
+    '00':
+      ring_type: Wedding
+  '17':
+    '30':
+      brand: Clogau Gold
+      gender: Ladies
+  '35':
+    '01':
+      brand: Accurist
+      gender: Ladies
+    '03':
+      brand: Tissot
+      gender: Ladies
+    '06':
+      brand: Longines
+    '18':
+      brand: Ted Baker
+      movement: Quartz
+    '22':
+      brand: Hugo Boss
+    '23':
+      brand: Ice-Watch
+      material: Plastic
+      movement: Quartz
+      gender: Unisex
+    '27':
+      brand: Pequignet
+      material: Steel
+      movement: Quartz
+      gender: Ladies
+      water_resistance: 50m
+    '28':
+      brand: Pequignet
+      material: Steel
+      movement: Quartz
+      gender: Gents
+      water_resistance: 50m
+    '29':
+      brand: Emporio Armani
+      material: Steel
+      movement: Quartz
+      water_resistance: 50m
+      packaging: Presentation Box with watch, Instruction booklet, warranty booklet,
+        authenticity card inside
+      warranty: 2 Years Manufacturers Warranty
+    '30':
+      brand: Fruitz
+      material: Steel
+      water_resistance: 30m
+      strap_style: Rubber
+      movement: Quartz
+    '32':
+      water_resistance: 30m
+      brand: Rado
+    '35':
+      brand: TechnoMarine
+      gender: Unisex
+  '50':
+    '00':
+      material: Silver
+      gender: Ladies
+    '01':
+      brand: Georg Jensen
+    '02':
+      brand: Elodie
+    '10,11,12,13':
+      brand: Luxenter
+  '55':
+    '00':
+      material: Silver
+      gender: Ladies
+    '01,02,03,04,05':
+      brand: Georg Jensen
+    '06,07,08,09,10':
+      brand: Nicole Barr
+      material: Silver,Enamel
+    '11,12':
+      brand: Tezer
+    '13,14':
+      brand: Elodie
+    '15,16,17,18,18,20':
+      brand: Ortak
+    '30,31,32,33,34':
+      brand: Tianguis Jackson
+    '40,41,42,43,44':
+      brand: Fiorelli
+    '45,46,47,48,49':
+      brand: White Ice
+    '50,51,52,53,54':
+      brand: Kit Heath
+    '60,61,62,63,64':
+      brand: Tezer
+    '65,66,67,68,69':
+      brand: Rocio Illumini
+    '70,71,72,73,74':
+      brand: CK
+    '75,76,77,78,79':
+      brand: Old Florence
+    '80,81,82,83,84':
+      brand: Sarah Jordan
+    '90':
+      brand: Fred Bennett
+      gender: Gents
+  '56':
+    '00':
+      material: Silver
+      gender: Ladies
+      brand: Dower & Hall
+  '57,58':
+    '00':
+      gender: Ladies
+      material: Silver
+      stone: Diamond
+      brand: Hot Diamonds
+  '77':
+    '00':
+      gender: Ladies
+      material: Silver
+      brand: Thomas Sabo
+  '81':
+    '00':
+      gender: Ladies
+      material: Steel,Yellow Gold
+      brand: Nomination
+    '02':
+      material: Steel & 18ct Gold & Enamel
+    '03':
+      stone: Cubic Zirconia
+    '05':
+      material: Steel
+      gender: Gents
+      nomination_category: Soho
+    '07':
+      stone: Cubic Zirconia
+    '08':
+      material: Steel
+    '10':
+      material: Steel
+      gender: Gents
+      nomination_category: Soho
+  '84':
+    '00':
+      brand: Molly Brown
+      gender: Ladies
+      material: Silver
+    '04':
+      material: Silver,Enamel
+blacklist:
+- rrp
+- percent_off
+- ring_type_2
+- ring_type_3
+- 2nd_material
+- 2nd_stone
+- diameter_(cm)
+- clearance
+- category
+categories:
+  1: Rings
+  2: Charms
+  4: Neckwear
+  5: Wristwear
+  6: Earrings
+  8: Other
+  9: Watches

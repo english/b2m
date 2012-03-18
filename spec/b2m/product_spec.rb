@@ -11,9 +11,9 @@ module B2m
       product.add_attribute '2nd Stone', 'Ruby'
       product.add_attribute 'Material',  'Gold'
 
-      product.attribute_value('Brand').must_equal    'Pandora'
-      product.attribute_value('Stone').must_equal    'Diamond,Ruby'
-      product.attribute_value('Material').must_equal 'Gold'
+      product.attribute_value('Brand').should    == 'Pandora'
+      product.attribute_value('Stone').should    == 'Diamond,Ruby'
+      product.attribute_value('Material').should == 'Gold'
     end
 
     it "has a config object" do
@@ -21,15 +21,15 @@ module B2m
 
       product = Product.new
       config = product.instance_variable_get(:@config)
-      config.translate(:test).must_equal 'Pass'
+      config.translate(:test).should == 'Pass'
     end
 
     it "only has one attribute per attribute name" do
-      product = Product.new
-      product.add_attribute 'Brand', 'Pandora'
-      product.add_attribute 'Brand', 'Georg Jensen'
+      subject = Product.new
+      subject.add_attribute 'Brand', 'Pandora'
+      subject.add_attribute 'Brand', 'Georg Jensen'
 
-      product.attributes_count.must_equal 1
+      subject.attributes_count.should ==  1
     end
 
     it "can add multiple attributes from xml" do
@@ -51,12 +51,12 @@ module B2m
       XML
 
       watch = Product.new
-      watch.add_attributes_from_xml Nokogiri::XML(xml)
+      watch.add_attributes_from_xml Nokogiri::XML xml
 
-      watch.attributes_count.must_equal 2
+      watch.attributes_count.should == 2
 
-      watch.attribute_value('Brand').must_equal      'TechnoMarine'
-      watch.attribute_value('Collection').must_equal 'Cruise Sport'
+      watch.attribute_value('Brand').should      == 'TechnoMarine'
+      watch.attribute_value('Collection').should == 'Cruise Sport'
     end
 
     describe "attributes that can have multiple values" do
@@ -65,12 +65,12 @@ module B2m
         ring.add_attribute 'Stone',     'Diamond'
         ring.add_attribute '2nd Stone', 'Ruby'
 
-        ring.attribute_value('Stone').must_equal 'Diamond,Ruby'
+        ring.attribute_value('Stone').should == 'Diamond,Ruby'
 
         ring.add_attribute 'Material',     'Silver'
         ring.add_attribute '2nd Material', 'Gold'
 
-        ring.attribute_value('Material').must_equal 'Silver,Gold'
+        ring.attribute_value('Material').should == 'Silver,Gold'
       end
     end
 
@@ -125,9 +125,9 @@ module B2m
       end
 
       it "loads the ATTRIBUTE nodes to attributes" do
-        product = Product.from_xml(xml)
-        product.attribute_value('Gender').must_equal 'Ladies'
-        product.attribute_value('Material').must_equal 'Yellow Gold'
+        product = Product.from_xml xml 
+        product.attribute_value('Gender').should   == 'Ladies'
+        product.attribute_value('Material').should == 'Yellow Gold'
       end
 
       it "loads attributes specified in 'required-headers' in config" do
@@ -139,9 +139,9 @@ module B2m
           }
         })
 
-        product = Product.from_xml(xml)
-        product.attribute_value('qty').must_equal '1'
-        product.attribute_value('price').must_equal '795.00'
+        product = Product.from_xml xml 
+        product.attribute_value('qty').should   == '1'
+        product.attribute_value('price').should == '795.00'
       end
     end
   end
