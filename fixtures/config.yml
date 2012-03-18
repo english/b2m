@@ -1,13 +1,14 @@
 ---
-translate:
-  _category: CATEGORY
-  name: WEBDESC
-  description: NOTEPAD
-  price: PRICE
-  qty: QTY
-  sku: STKNO
-  special_price: Special Price
-  suppl_ref: SUPPLREF
+translate-to-xml:
+  Category: CATEGORY
+  Name: WEBDESC
+  Description: NOTEPAD
+  Price: PRICE
+  Quantity: QTY
+  SKU: STKNO
+  "Supplier Reference": SUPPLREF
+translate-from-csv:
+ qty: Quantity
 required-headers:
 - condition
 - _store

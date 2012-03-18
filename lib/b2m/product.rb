@@ -32,9 +32,15 @@ module B2m
     def add_attributes_from_xml xml
       add_required_headers xml
       add_from_attribute_nodes xml
+      add_extra_attributes xml
     end
 
     private
+
+    def add_extra_attributes xml
+      modifier = node_content xml, 'ATTR'
+      add_attribute 'Modifier', modifier
+    end
 
     def add_from_attribute_nodes xml
       xml.css('ATTRIBUTE').each do |att|

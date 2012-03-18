@@ -2,6 +2,10 @@ Given /^a sample XML catalog with just one ring item$/ do
   @xml = File.read File.expand_path '../../../fixtures/ring.xml', __FILE__
 end
 
+Given /^a simple config file$/ do
+  B2m::Config.load YAML.load_file File.expand_path '../../../fixtures/config.yml', __FILE__
+end
+
 When /^I load the product from the XML file$/ do
   @product = B2m::Product.from_xml @xml
 end

@@ -6,6 +6,7 @@ Feature: Load products from an xml file
 
   Scenario: Loaded product has simple attribute values
     Given a sample XML catalog with just one ring item
+    And a simple config file
     When I load the product from the XML file
     Then the product should have the following attribute values:
        | Modifier | SKU     | Supplier Reference | Quantity | Price  | Name                                | Description                                                                                                                | 
