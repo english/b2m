@@ -17,7 +17,7 @@ module B2m
       type = case name
              when 'Stone', 'Material' then Multiple.new name, value, product
              when 'Modifier' then Modifier.new value
-             when 'price' then Price.new name, value, product
+             when 'price' then Price.new value
              else OpenStruct.new value: value, product: product
              end
 

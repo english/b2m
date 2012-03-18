@@ -1,6 +1,6 @@
 module B2m
   class Price
-    def initialize(name, value, product)
+    def initialize value
       @value = value
     end
 
