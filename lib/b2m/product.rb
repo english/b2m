@@ -32,8 +32,8 @@ module B2m
     def add_attributes_from_xml(xml)
       @config.required_headers.each do |header|
         nice_name = @config.translate_from_csv header
-        brs_name = @config.translate_to_xml nice_name
-        add_attribute nice_name, node_content(xml, brs_name)
+        xml_name = @config.translate_to_xml nice_name
+        add_attribute nice_name, node_content(xml, xml_name)
       end
 
       xml.css('ATTRIBUTE').each do |att|
