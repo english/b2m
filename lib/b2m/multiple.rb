@@ -1,6 +1,6 @@
 module B2m
 	class Multiple
-		def initialize(name, value, product)
+		def initialize name, value, product
 			@name    = name
 			@value   = value
       @product = product
