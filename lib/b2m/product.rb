@@ -1,23 +1,23 @@
 module B2m
   class Product
     def initialize
-      @attributes = Hash.new(NullAttribute.new)
+      @attributes = Hash.new NullAttribute.new
       @config = Config.instance
     end
 
-    def self.from_xml(xml)
+    def self.from_xml xml
       product = Product.new
-      product.add_attributes_from_xml Nokogiri::XML(xml)
+      product.add_attributes_from_xml Nokogiri::XML xml
 
       product
     end
 
-    def add_attribute(name, value)
+    def add_attribute name, value
       attr = Attribute.create name, value, self
       @attributes[attr.name] = attr unless attribute? attr.name
     end
 
-    def attribute_value(name)
+    def attribute_value name
       @attributes[name].value
     end
 
@@ -51,8 +51,8 @@ module B2m
       end
     end
 
-    def node_content(xml, element)
-      xml.at_css(element).content if xml.at_css(element)
+    def node_content xml, element
+      xml.at_css(element).content if xml.at_css element
     end
   end
 end
