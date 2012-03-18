@@ -1,6 +1,7 @@
 source :rubygems
 
-gem "nokogiri", "~> 1.5.2"
+gem "nokogiri",      "~> 1.5.2"
+gem "activesupport", "~> 3.2.2"
 
 group :development do
   gem "rake",         "~> 0.9.2"

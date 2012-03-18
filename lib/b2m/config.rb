@@ -1,4 +1,5 @@
 require 'singleton'
+require 'active_support/inflector'
 
 module B2m
   class Config
@@ -30,11 +31,11 @@ module B2m
     end
 
     def translate_to_xml key
-      @data['translate-to-xml'][key]
+      @data['translate-to-xml'].fetch(key) { key.camelize.upcase }
     end
 
 		def translate_from_csv key
-      @data['translate-from-csv'][key]
+      @data['translate-from-csv'].fetch(key) { key.titlecase.strip }
 		end
   end
 end
