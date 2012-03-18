@@ -7,7 +7,6 @@ When /^I load the product from the XML file$/ do
 end
 
 Then /^the product should have the following attribute values:$/ do |table|
-  # table is a Cucumber::Ast::Table
   table.hashes.each do |hash|
     hash.each do |attribute, value|
       @product.attribute_value(attribute).should == value
