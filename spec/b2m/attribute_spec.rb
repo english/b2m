@@ -24,5 +24,19 @@ module B2m
       its(:name)  { should == 'Brand'        }
       its(:value) { should == 'TechnoMarine' }
     end
+
+    describe :value do
+      context "simple attributes" do
+        subject { Attribute.create 'Simple', 'answer', double('Product') }
+        its(:value) { should == 'answer' }
+      end
+
+      context "A Modifier attribute" do
+        context "with a value of 'A'" do
+          subject { Attribute.create 'Modifier', 'A', double('Product') }
+          its(:value) { should == 'Add' }
+        end
+      end
+    end
   end
 end

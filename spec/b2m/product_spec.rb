@@ -17,11 +17,11 @@ module B2m
     end
 
     it "has a config object" do
-      Config.load({'translate' => {:test => 'Pass'}})
+      Config.load({'translate-to-xml' => {:test => 'Pass'}})
 
       product = Product.new
       config = product.instance_variable_get(:@config)
-      config.translate(:test).should == 'Pass'
+      config.translate_to_xml(:test).should == 'Pass'
     end
 
     it "only has one attribute per attribute name" do
@@ -133,15 +133,21 @@ module B2m
       it "loads attributes specified in 'required-headers' in config" do
         Config.load({
           'required-headers' => %w{ qty price },
-          'translate' => {
-            'qty' => 'QTY',
-            'price' => 'PRICE'
+          'translate-to-xml' => {
+            'Quantity' => 'QTY',
+            'Price'    => 'PRICE',
+            'Modifier' => 'ATTR'
+          },
+          'translate-from-csv' => {
+            'qty'   => 'Quantity',
+            'price' => 'Price'
           }
         })
 
         product = Product.from_xml xml 
-        product.attribute_value('qty').should   == '1'
-        product.attribute_value('price').should == '795.00'
+        product.attribute_value('Quantity').should == '1'
+        product.attribute_value('Price').should    == '795.00'
+        product.attribute_value('Modifier').should == 'Add'
       end
     end
   end
