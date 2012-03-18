@@ -25,16 +25,12 @@ module B2m
       @attributes.keys.compact.count
     end
 
-    def attribute?(name)
+    def attribute? name
       @attributes.include? name
     end
 
-    def add_attributes_from_xml(xml)
-      @config.required_headers.each do |header|
-        nice_name = @config.translate_from_csv header
-        xml_name = @config.translate_to_xml nice_name
-        add_attribute nice_name, node_content(xml, xml_name)
-      end
+    def add_attributes_from_xml xml
+      add_required_headers xml
 
       xml.css('ATTRIBUTE').each do |att|
         attribute = Attribute.from_xml att, self
@@ -43,6 +39,14 @@ module B2m
     end
 
     private
+
+    def add_required_headers xml
+      @config.required_headers.each do |header|
+        nice_name = @config.translate_from_csv header
+        xml_name = @config.translate_to_xml nice_name
+        add_attribute nice_name, node_content(xml, xml_name)
+      end
+    end
 
     def node_content(xml, element)
       xml.at_css(element).content if xml.at_css(element)
