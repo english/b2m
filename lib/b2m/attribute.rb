@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module B2m
   class Attribute
     attr_reader :name, :product
@@ -16,7 +18,7 @@ module B2m
              when 'Stone', 'Material' then Multiple.new name, value, product
              when 'Modifier' then Modifier.new value
              when 'price' then Price.new name, value, product
-             else Normal.new name, value, product
+             else OpenStruct.new value: value, product: product
              end
 
       new name, value, type, product
