@@ -2,25 +2,24 @@ module B2m
   class Attribute
     attr_reader :name, :product
 
-    def initialize(name, value, type, product)
+    def initialize name, value, type, product
       @name    = name
       @value   = value
       @product = product
-      @type    = type.new name, value, product
+      @type    = type
     end
 
     def self.create(name, value, product)
       return NullAttribute.new if name.to_s.empty? or value.to_s.empty?
 
       type = case name
-             when 'Stone'    then Multiple
-             when 'Material' then Multiple
-             when 'Modifier' then Modifier
-             when 'price' then Price
-             else Normal
+             when 'Stone', 'Material' then Multiple.new name, value, product
+             when 'Modifier' then Modifier.new value
+             when 'price' then Price.new name, value, product
+             else Normal.new name, value, product
              end
 
-      new(name, value, type, product)
+      new name, value, type, product
     end
 
     def self.from_xml(xml, product)
