@@ -1,4 +1,5 @@
 require_relative 'attribute'
+require_relative 'xml_product'
 
 module B2m
   class Product
@@ -62,12 +63,9 @@ module B2m
     end
 
     def add_required_headers(xml)
-      @config.required_headers.each do |header|
-        nice_name = @config.translate_from_csv(header)
-        xml_name  = @config.translate_to_xml(nice_name)
-				value = node_content(xml, xml_name)
-
-        add_attribute(nice_name, value)
+      xml_product = XMLProduct.new(xml.to_xml)
+      xml_product.required_headers.each do |name, value|
+        add_attribute(name, value)
       end
 
 			self
