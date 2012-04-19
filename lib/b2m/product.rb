@@ -17,10 +17,13 @@ module B2m
     def add_attribute(name, value)
       attr = Attribute.create(name, value, self)
       insert_attribute(attr)
+
+			self
     end
 
     def attribute_value(name)
       attribute = @attributes.fetch(name) { NullAttribute.new }
+
 			attribute.value
     end
 
@@ -36,6 +39,8 @@ module B2m
       add_required_headers(xml)
       add_from_attribute_nodes(xml)
       add_extra_attributes(xml)
+
+			self
     end
 
     private
@@ -43,6 +48,8 @@ module B2m
     def add_extra_attributes(xml)
       modifier = node_content(xml, 'ATTR')
       add_attribute('Modifier', modifier)
+
+			self
     end
 
     def add_from_attribute_nodes(xml)
@@ -62,6 +69,8 @@ module B2m
 
         add_attribute(nice_name, value)
       end
+
+			self
     end
 
     def node_content(xml, element)
@@ -70,6 +79,8 @@ module B2m
 
     def insert_attribute(attr)
       @attributes[attr.name] = attr unless attribute?(attr.name)
+
+			self
     end
   end
 end
