@@ -40,8 +40,6 @@ module B2m
       "#{@name}: #{@value}"
     end
 
-    private
-
     def self.att_desc(xml)
       xml.at_css('ATT-DESC').content
     end
