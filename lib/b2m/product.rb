@@ -1,3 +1,5 @@
+require_relative 'attribute'
+
 module B2m
   class Product
     def initialize

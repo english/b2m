@@ -1,5 +1,9 @@
 require 'ostruct'
 
+require_relative 'modifier'
+require_relative 'multiple'
+require_relative 'price'
+
 module B2m
   class Attribute
     attr_reader :name, :product

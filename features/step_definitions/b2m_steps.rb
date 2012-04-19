@@ -1,41 +1,31 @@
+require 'aruba/cucumber'
+require 'nokogiri'
+
+require_relative '../../lib/b2m/config'
+require_relative '../../lib/b2m/product'
+
 Given /^a simple config file$/ do
-  B2m::Config.load YAML.load_file File.expand_path '../../../fixtures/config.yml', __FILE__
+  yaml = YAML.load_file(File.expand_path('../../../fixtures/config.yml', __FILE__))
+  B2m::Config.load(yaml)
 end
 
-Given /^a bsmart catalog file with the following attributes:$/ do |table|
-  builder = Nokogiri::XML::Builder.new do |xml|
-    xml.CATALOG do
-      table.hashes.each do |product|
-        xml.ITEM do
-          product.each do |attribute, value|
-            xml.send attribute.to_sym, value
-          end
-        end
-      end
-    end
-  end
-  @catalog = Nokogiri::XML(builder.to_xml)
+Given /^a bsmart ecom catalog named "([^"]*)" attributes:$/ do |filename, products_table|
+  xml = ecom_catalog(products_table.hashes)
+  write_file(filename, xml)
 end
 
-Given /^the catalog has the following custom attributes:$/ do |table|
-  table.hashes.each do |attributes|
-    @catalog.css('ITEM').each do |item|
-      attributes.each do |name, value|
-        att_desc = Nokogiri::XML::Node.new 'ATT-DESC', @catalog
-        att_desc.content = name
-        att_value = Nokogiri::XML::Node.new 'ATT-VALUE', @catalog
-        att_value.content = value
-        attr = Nokogiri::XML::Node.new 'ATTRIBUTE', @catalog
-        attr << att_desc
-        attr << att_value
-        item << attr
-      end
-    end
+Given /^the ecom catalog "([^"]*)" has the following custom attributes:$/ do |filename, products_table|
+  in_current_dir do
+    xml = IO.read(filename)
+    new_xml = add_special_attributes(xml, products_table.hashes)
+    write_file(filename, new_xml)
   end
 end
 
-When /^I load the product from the XML file$/ do
-  @product = B2m::Product.from_xml @catalog.to_xml
+When /^I load the product from the bsmart ecom catalog "([^"]*)"$/ do |filename|
+  in_current_dir do
+    @product = B2m::Product.from_xml(File.read(filename))
+  end
 end
 
 Then /^the product should have the following attribute values:$/ do |table|
