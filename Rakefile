@@ -1,11 +1,5 @@
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 
-include Rake::DSL
-
-Rake::TestTask.new(:spec) do |t|
-  t.libs.push "lib"
-  t.libs.push "spec"
-  t.pattern = 'spec/**/*_spec.rb'
-end
+RSpec::Core::RakeTask.new(:spec)
 
 task :default => [:spec]
