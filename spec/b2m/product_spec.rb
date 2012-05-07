@@ -2,8 +2,6 @@ require 'spec_helper'
 
 module B2m
   describe Product do
-    before { Config.clear! }
-
     it "has attributes" do
       product = Product.new
       product.add_attribute 'Brand',     'Pandora'
@@ -14,14 +12,6 @@ module B2m
       product.attribute_value('Brand').should    == 'Pandora'
       product.attribute_value('Stone').should    == 'Diamond,Ruby'
       product.attribute_value('Material').should == 'Gold'
-    end
-
-    it "has a config object" do
-      Config.load({'translate-to-xml' => {:test => 'Pass'}})
-
-      product = Product.new
-      config = product.instance_variable_get(:@config)
-      config.translate_to_xml(:test).should == 'Pass'
     end
 
     it "only has one attribute per attribute name" do
@@ -50,8 +40,7 @@ module B2m
         </ITEM>
       XML
 
-      watch = Product.new
-      watch.add_attributes_from_xml Nokogiri::XML xml
+      watch = Product.from_xml(xml)
 
       watch.attributes_count.should == 2
 
@@ -132,7 +121,7 @@ module B2m
 
       it "loads attributes specified in 'required-headers' in config" do
         Config.load({
-          'required-headers' => %w{ qty price sku },
+          'required-headers' => %w[qty price sku],
           'translate-to-xml' => {
             'Quantity' => 'QTY',
             'Price'    => 'PRICE',
@@ -146,7 +135,7 @@ module B2m
           }
         })
 
-        product = Product.from_xml xml 
+        product = Product.from_xml(xml) 
         product.attribute_value('Quantity').should == '1'
         product.attribute_value('Price').should    == '795.00'
         product.attribute_value('Modifier').should == 'Add'

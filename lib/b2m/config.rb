@@ -4,12 +4,8 @@ module B2m
   module Config
 		extend self
 
-    def initialize
-      clear!
-    end
-
     def clear!
-      @data = Hash.new
+      @data = {}
     end
 
     def load(data)
@@ -20,15 +16,21 @@ module B2m
     end
 
     def required_headers
-      @data.fetch('required-headers') { [] }
+      data.fetch('required-headers') { [] }
     end
 
     def translate_to_xml(key)
-      @data['translate-to-xml'].fetch(key) { key.camelize.upcase }
+      data['translate-to-xml'].fetch(key) { key.camelize.upcase }
     end
 
 		def translate_from_csv(key)
-      @data['translate-from-csv'].fetch(key) { key.titlecase.strip }
+      data['translate-from-csv'].fetch(key) { key.titlecase.strip }
+		end
+
+		private
+
+		def data
+			@data ||= {}
 		end
   end
 end

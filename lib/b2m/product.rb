@@ -5,12 +5,14 @@ module B2m
   class Product
     def initialize
       @attributes = Hash.new
-      @config     = Config.instance
     end
 
     def self.from_xml(xml)
-      product = Product.new
-      product.add_attributes_from_xml(Nokogiri::XML(xml))
+			product = Product.new
+
+			XMLProduct.new(xml).attributes.each do |attr|
+				product.add_attribute(attr.name, attr.value)
+			end
 
       product
     end
@@ -36,44 +38,7 @@ module B2m
       @attributes.include?(name)
     end
 
-    def add_attributes_from_xml(xml)
-      add_required_headers(xml)
-      add_from_attribute_nodes(xml)
-      add_extra_attributes(xml)
-
-			self
-    end
-
     private
-
-    def add_extra_attributes(xml)
-      modifier = node_content(xml, 'ATTR')
-      add_attribute('Modifier', modifier)
-
-			self
-    end
-
-    def add_from_attribute_nodes(xml)
-      xml.css('ATTRIBUTE').each do |node|
-				name, value = Attribute.att_desc(node), Attribute.att_value(node)
-				add_attribute(name, value)
-
-				self
-      end
-    end
-
-    def add_required_headers(xml)
-      xml_product = XMLProduct.new(xml.to_xml)
-      xml_product.required_headers.each do |name, value|
-        add_attribute(name, value)
-      end
-
-			self
-    end
-
-    def node_content(xml, element)
-      xml.at_css(element).content if xml.at_css(element)
-    end
 
     def insert_attribute(attr)
       @attributes[attr.name] = attr unless attribute?(attr.name)
