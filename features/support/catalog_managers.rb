@@ -1,6 +1,12 @@
 module CatalogManagers
+  def ecom_catalog_vertical(product_table)
+    product = Hash[product_table.raw]
+
+    ecom_catalog([product])
+  end
+
 	def ecom_catalog(products)
-		builder = Nokogiri::XML::Builder.new { |xml|
+		Nokogiri::XML::Builder.new { |xml|
 			xml.CATALOG do
 				products.each do |product|
 					xml.ITEM do
@@ -11,9 +17,12 @@ module CatalogManagers
 		}.to_xml
 	end
 
-	def add_special_attributes(xml, products)
+	def add_special_attributes(xml, products_table)
+    products = [ Hash[products_table.raw] ]
+
 		doc = Nokogiri::XML(xml)
 		products.each_with_index do |product, index|
+      puts product
 			item = doc.css("ITEM")[index]
 			product.each do |attr_name, value|
 				attribute = Nokogiri::XML::Node.new('ATTRIBUTE', doc)

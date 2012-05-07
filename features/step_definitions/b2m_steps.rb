@@ -9,15 +9,15 @@ Given /^a simple config file$/ do
   B2m::Config.load(yaml)
 end
 
-Given /^a bsmart ecom catalog named "([^"]*)" attributes:$/ do |filename, products_table|
-  xml = ecom_catalog(products_table.hashes)
+Given /^a bsmart ecom catalog named "([^"]*)" with the following attributes:$/ do |filename, products_table|
+  xml = ecom_catalog_vertical(products_table)
   write_file(filename, xml)
 end
 
 Given /^the ecom catalog "([^"]*)" has the following custom attributes:$/ do |filename, products_table|
   in_current_dir do
     xml = IO.read(filename)
-    new_xml = add_special_attributes(xml, products_table.hashes)
+    new_xml = add_special_attributes(xml, products_table)
     write_file(filename, new_xml)
   end
 end
