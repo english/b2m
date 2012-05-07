@@ -29,9 +29,5 @@ When /^I load the product from the bsmart ecom catalog "([^"]*)"$/ do |filename|
 end
 
 Then /^the product should have the following attribute values:$/ do |table|
-  table.hashes.each do |hash|
-    hash.each do |attribute, value|
-      @product.attribute_value(attribute).should == value
-    end
-  end
+  product_diff_vertical_table!(@product, table)
 end

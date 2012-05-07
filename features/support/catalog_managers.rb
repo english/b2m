@@ -41,6 +41,12 @@ module CatalogManagers
 
 		doc.to_xml
 	end
+
+  def product_diff_vertical_table!(product, table)
+    Hash[table.raw].each do |attribute, value|
+      product.attribute_value(attribute).should == value
+    end
+  end
 end
 
 World(CatalogManagers)
