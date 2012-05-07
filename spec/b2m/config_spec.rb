@@ -1,21 +1,19 @@
-require 'spec_helper'
+require_relative '../../lib/b2m/config'
 
 module B2m
   describe Config do
     subject do
-      Config.instance.load({
-        'required-headers'   => %w{ condition _store qty },
+      Config.load({
+        'required-headers'   => %w[condition _store qty],
         'translate-to-xml'   => {
           'apples' => 'oranges',
           'Supplier Reference' => 'SUPPLREF'
          },
         'translate-from-csv' => { 'qty' => 'Quantity' }
       })
-
-      Config.instance
     end
 
-    its(:required_headers) { should ==  %w{ condition _store qty } }
+    its(:required_headers) { should ==  %w[condition _store qty] }
 
     describe :translate_to_xml do
       it "translates human readable attribute names to bsmart xml names" do
