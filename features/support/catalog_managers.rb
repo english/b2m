@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module CatalogManagers
   def ecom_catalog_vertical(product_table)
     product = Hash[product_table.raw]
@@ -48,5 +50,3 @@ module CatalogManagers
     end
   end
 end
-
-World(CatalogManagers)

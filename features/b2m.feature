@@ -1,40 +1,26 @@
-Feature: Load products from an xml file
+Feature: Generate CSV
 
-  So that I can do anything with the bsmart stock file
-  As the developer 
-  I want to be able to work with an object of that product
+  So that the website has the correct stock information
+  As someone with too much time on their hands
+  I want to generate a CSV file that Magento can import from a bsmart XML catalog
 
-  Scenario: Loaded product has simple attribute values
-    Given a simple config file
-    And a bsmart ecom catalog named "catalog.xml" with the following attributes:
-      | ATTR     | A                                   | 
-      | STKNO    | 101044                              | 
-      | SUPPLREF | ML99/35                             | 
-      | QTY      | 1                                   | 
-      | PRICE    | 0000795                             | 
-      | REASON   |                                     | 
-      | CATEGORY | 1                                   | 
-      | WEBDESC  | 18ct Yellow Gold Diamond Twist Ring | 
-      | NOTEPAD  | Round brilliant diamond ring.       | 
-    And the ecom catalog "catalog.xml" has the following custom attributes:
-      | Brand         | Other        | 
-      | Stone         | Diamond      | 
-      | 2nd Stone     |              | 
-      | Stone Cut     |              | 
-      | Stone Setting |              | 
-      | Gender        | Ladies       | 
-      | Material      | Yellow Gold  | 
-      | 2nd Material  |              | 
-      | Ring Type     | Engagement   | 
-      | Ring Type 2   | Single Stone | 
-      | Ring Type 3   |              | 
-      | Total Weight  | 0.00         | 
-    When I load the product from the bsmart ecom catalog "catalog.xml"
-    Then the product should have the following attribute values:
-      | Modifier           | Add                                 | 
-      | SKU                | 0101044                             | 
-      | Supplier Reference |                                     |
-      | Quantity           | 1                                   | 
-      | Price              | 795.00                              | 
-      | Name               | 18ct Yellow Gold Diamond Twist Ring | 
-      | Description        | Round brilliant diamond ring.       | 
+  Scenario: Minimal XML catalog
+    Given a bsmart catalog named "catalog.xml" with the following attributes:
+      | ATTR     | A        |
+      | STKNO    | 0101044  |
+      | SUPPLREF | ML99/35  |
+      | QTY      | 1        |
+      | PRICE    | 0000795  |
+      | REASON   |          |
+      | CATEGORY | 1        |
+      | WEBDESC  | 18ct Yellow Gold Ring | 
+      | NOTEPAD  | Round brilliant diamond ring. | 
+    When I run `b2m catalog.xml`
+    Then I should see the following CSV:
+      | status | Enabled |
+      | SKU    | 0101044 |
+      | Supplier Reference | |
+      | Quantity | 1      | 
+      | Price    | 795.00 | 
+      | Name        | 18ct Yellow Gold Ring | 
+      | Description | Round brilliant diamond ring. | 

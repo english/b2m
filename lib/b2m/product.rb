@@ -8,13 +8,11 @@ module B2m
     end
 
     def self.from_xml(xml)
-			product = Product.new
-
-			XMLProduct.new(xml).attributes.each do |attr|
-				product.add_attribute(attr.name, attr.value)
-			end
-
-      product
+			product = Product.new.tap do |p|
+        XMLProduct.new(xml).attributes.each do |attr|
+          p.add_attribute(attr.name, attr.value)
+        end
+      end
     end
 
     def add_attribute(name, value)

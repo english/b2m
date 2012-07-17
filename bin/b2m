@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path(File.join('..', 'lib'), File.dirname(__FILE__))
+
+require 'b2m'
+
+catalog_file = ARGV.first
+
+catalog = B2m::Catalog.from_xml File.read catalog_file
+puts catalog.to_csv
